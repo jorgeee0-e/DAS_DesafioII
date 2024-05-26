@@ -1,0 +1,39 @@
+﻿@using Desafio2_DAS.Models;
+@{
+
+    //@using System.Collections.Generic;
+    @model List<Peliculas>
+
+
+}
+
+<div class="row">
+    <div class="row">
+
+        @foreach (var p in Model)
+        {
+
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <script>console.log(@p.poster_url)</script>
+                    <img class="card-img-top" src="@p.poster_url" alt="@p.titulo" />
+                    <script>console.log(@p.poster_url)</script>
+                    <div class="card-body">
+                        <h5 class="card-title">@p.titulo</h5>
+                        <p class="card-text">@p.sinopsis</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="@Url.Action("Details","Peliculas",new{nombre = p.titulo})" class="btn btn-sm btn-outline-secondary">View</a>
+                            </div>
+                            <small class="text-muted"> <b>Director:</b> @p.Directores.nombre</small>
+                            <small class="text-muted"> <b>Genero:</b> @p.Generos.genero</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+

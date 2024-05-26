@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="das_peliculasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Directores">
+    <Key>
+      <PropertyRef Name="id_director" />
+    </Key>
+    <Property Name="id_director" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Generos">
+    <Key>
+      <PropertyRef Name="id_genero" />
+    </Key>
+    <Property Name="id_genero" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="genero" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Peliculas">
+    <Key>
+      <PropertyRef Name="id_pelicula" />
+    </Key>
+    <Property Name="id_pelicula" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="titulo" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="sinopsis" Type="text" Nullable="false" />
+    <Property Name="poster_url" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="id_director" Type="int" Nullable="false" />
+    <Property Name="id_genero" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'das_peliculas.dbo.Puntuaciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="Puntuaciones">
+    <Key>
+      <PropertyRef Name="id_pelicula" />
+    </Key>
+    <Property Name="id_pelicula" Type="int" Nullable="false" />
+    <Property Name="puntuacion" Type="decimal" Precision="3" Scale="1" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'das_peliculas.dbo.rate_per_user' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="rate_per_user">
+    <Key>
+      <PropertyRef Name="id_usuario" />
+      <PropertyRef Name="id_pelicula" />
+      <PropertyRef Name="calificacion" />
+    </Key>
+    <Property Name="id_usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="id_pelicula" Type="int" Nullable="false" />
+    <Property Name="calificacion" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="rates">
+    <Key>
+      <PropertyRef Name="id_calificacion" />
+    </Key>
+    <Property Name="id_pelicula" Type="int" />
+    <Property Name="titulo" Type="varchar" MaxLength="255" />
+    <Property Name="promedio_calificacion" Type="float" />
+    <Property Name="id_calificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="usuarios">
+    <Key>
+      <PropertyRef Name="id_user" />
+    </Key>
+    <Property Name="id_user" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar(max)" />
+    <Property Name="apellido" Type="nvarchar(max)" />
+    <Property Name="correo" Type="nvarchar(max)" />
+    <Property Name="password" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK__Peliculas__id_di__45F365D3">
+    <End Role="Directores" Type="Self.Directores" Multiplicity="1" />
+    <End Role="Peliculas" Type="Self.Peliculas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Directores">
+        <PropertyRef Name="id_director" />
+      </Principal>
+      <Dependent Role="Peliculas">
+        <PropertyRef Name="id_director" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Peliculas__id_ge__46E78A0C">
+    <End Role="Generos" Type="Self.Generos" Multiplicity="1" />
+    <End Role="Peliculas" Type="Self.Peliculas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Generos">
+        <PropertyRef Name="id_genero" />
+      </Principal>
+      <Dependent Role="Peliculas">
+        <PropertyRef Name="id_genero" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Puntuacio__id_pe__49C3F6B7">
+    <End Role="Peliculas" Type="Self.Peliculas" Multiplicity="1" />
+    <End Role="Puntuaciones" Type="Self.Puntuaciones" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Peliculas">
+        <PropertyRef Name="id_pelicula" />
+      </Principal>
+      <Dependent Role="Puntuaciones">
+        <PropertyRef Name="id_pelicula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_rate_peliculas">
+    <End Role="Peliculas" Type="Self.Peliculas" Multiplicity="0..1" />
+    <End Role="rates" Type="Self.rates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Peliculas">
+        <PropertyRef Name="id_pelicula" />
+      </Principal>
+      <Dependent Role="rates">
+        <PropertyRef Name="id_pelicula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_rate_per_user_peliculas">
+    <End Role="Peliculas" Type="Self.Peliculas" Multiplicity="1" />
+    <End Role="rate_per_user" Type="Self.rate_per_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Peliculas">
+        <PropertyRef Name="id_pelicula" />
+      </Principal>
+      <Dependent Role="rate_per_user">
+        <PropertyRef Name="id_pelicula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_rate_per_user_usuarios">
+    <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+    <End Role="rate_per_user" Type="Self.rate_per_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuarios">
+        <PropertyRef Name="id_user" />
+      </Principal>
+      <Dependent Role="rate_per_user">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="das_peliculasModelStoreContainer">
+    <EntitySet Name="Directores" EntityType="Self.Directores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Generos" EntityType="Self.Generos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Peliculas" EntityType="Self.Peliculas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="rates" EntityType="Self.rates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Puntuaciones" EntityType="Self.Puntuaciones" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[Puntuaciones].[id_pelicula] AS [id_pelicula], 
+[Puntuaciones].[puntuacion] AS [puntuacion]
+FROM [dbo].[Puntuaciones] AS [Puntuaciones]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="rate_per_user" EntityType="Self.rate_per_user" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[rate_per_user].[id_usuario] AS [id_usuario], 
+[rate_per_user].[id_pelicula] AS [id_pelicula], 
+[rate_per_user].[calificacion] AS [calificacion]
+FROM [dbo].[rate_per_user] AS [rate_per_user]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Peliculas__id_di__45F365D3" Association="Self.FK__Peliculas__id_di__45F365D3">
+      <End Role="Directores" EntitySet="Directores" />
+      <End Role="Peliculas" EntitySet="Peliculas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Peliculas__id_ge__46E78A0C" Association="Self.FK__Peliculas__id_ge__46E78A0C">
+      <End Role="Generos" EntitySet="Generos" />
+      <End Role="Peliculas" EntitySet="Peliculas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Puntuacio__id_pe__49C3F6B7" Association="Self.FK__Puntuacio__id_pe__49C3F6B7">
+      <End Role="Peliculas" EntitySet="Peliculas" />
+      <End Role="Puntuaciones" EntitySet="Puntuaciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rate_peliculas" Association="Self.FK_rate_peliculas">
+      <End Role="Peliculas" EntitySet="Peliculas" />
+      <End Role="rates" EntitySet="rates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rate_per_user_peliculas" Association="Self.FK_rate_per_user_peliculas">
+      <End Role="Peliculas" EntitySet="Peliculas" />
+      <End Role="rate_per_user" EntitySet="rate_per_user" />
+    </AssociationSet>
+    <AssociationSet Name="FK_rate_per_user_usuarios" Association="Self.FK_rate_per_user_usuarios">
+      <End Role="usuarios" EntitySet="usuarios" />
+      <End Role="rate_per_user" EntitySet="rate_per_user" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
