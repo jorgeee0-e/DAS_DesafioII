@@ -28,10 +28,10 @@ namespace Desafio2_DAS.Models
         public DbSet<Directores> Directores { get; set; }
         public DbSet<Generos> Generos { get; set; }
         public DbSet<Peliculas> Peliculas { get; set; }
+        public DbSet<rate_per_user> rate_per_user { get; set; }
+        public DbSet<rates> rates { get; set; }
         public DbSet<sysdiagrams> sysdiagrams { get; set; }
         public DbSet<usuarios> usuarios { get; set; }
         public DbSet<Puntuaciones> Puntuaciones { get; set; }
-        public DbSet<rate_per_user> rate_per_user { get; set; }
-        public DbSet<rates> rates { get; set; }
     }
 }

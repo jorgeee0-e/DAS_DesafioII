@@ -16,8 +16,8 @@ namespace Desafio2_DAS.Models
     {
         public Peliculas()
         {
-            this.rate_per_user = new HashSet<rate_per_user>();
             this.rates = new HashSet<rates>();
+            this.rate_per_user = new HashSet<rate_per_user>();
         }
     
         public int id_pelicula { get; set; }
@@ -30,7 +30,7 @@ namespace Desafio2_DAS.Models
         public virtual Directores Directores { get; set; }
         public virtual Generos Generos { get; set; }
         public virtual Puntuaciones Puntuaciones { get; set; }
-        public virtual ICollection<rate_per_user> rate_per_user { get; set; }
         public virtual ICollection<rates> rates { get; set; }
+        public virtual ICollection<rate_per_user> rate_per_user { get; set; }
     }
 }

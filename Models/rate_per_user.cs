@@ -17,6 +17,7 @@ namespace Desafio2_DAS.Models
         public string id_usuario { get; set; }
         public int id_pelicula { get; set; }
         public double calificacion { get; set; }
+        public int Id { get; set; }
     
         public virtual Peliculas Peliculas { get; set; }
         public virtual usuarios usuarios { get; set; }

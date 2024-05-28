@@ -29,8 +29,29 @@
     <NavigationProperty Name="Directores" Relationship="Self.FK__Peliculas__id_di__45F365D3" FromRole="Peliculas" ToRole="Directores" />
     <NavigationProperty Name="Generos" Relationship="Self.FK__Peliculas__id_ge__46E78A0C" FromRole="Peliculas" ToRole="Generos" />
     <NavigationProperty Name="Puntuaciones" Relationship="Self.FK__Puntuacio__id_pe__49C3F6B7" FromRole="Peliculas" ToRole="Puntuaciones" />
+    <NavigationProperty Name="rates" Relationship="Self.FK_rate_peliculas" FromRole="Peliculas" ToRole="rates" />
     <NavigationProperty Name="rate_per_user" Relationship="Self.FK_rate_per_user_peliculas" FromRole="Peliculas" ToRole="rate_per_user" />
-    <NavigationProperty Name="rates" Relationship="das_peliculasModel.FK_rate_peliculas" FromRole="Peliculas" ToRole="rates" />
+  </EntityType>
+  <EntityType Name="rate_per_user">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="id_usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="id_pelicula" Type="Int32" Nullable="false" />
+    <Property Name="calificacion" Type="Double" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Peliculas" Relationship="Self.FK_rate_per_user_peliculas" FromRole="rate_per_user" ToRole="Peliculas" />
+    <NavigationProperty Name="usuarios" Relationship="Self.FK_rate_per_user_usuarios" FromRole="rate_per_user" ToRole="usuarios" />
+  </EntityType>
+  <EntityType Name="rates">
+    <Key>
+      <PropertyRef Name="id_calificacion" />
+    </Key>
+    <Property Name="id_pelicula" Type="Int32" />
+    <Property Name="titulo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="promedio_calificacion" Type="Double" />
+    <Property Name="id_calificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Peliculas" Relationship="Self.FK_rate_peliculas" FromRole="rates" ToRole="Peliculas" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -60,18 +81,6 @@
     <Property Name="id_pelicula" Type="Int32" Nullable="false" />
     <Property Name="puntuacion" Type="Decimal" Precision="3" Scale="1" />
     <NavigationProperty Name="Peliculas" Relationship="Self.FK__Puntuacio__id_pe__49C3F6B7" FromRole="Puntuaciones" ToRole="Peliculas" />
-  </EntityType>
-  <EntityType Name="rate_per_user">
-    <Key>
-      <PropertyRef Name="id_usuario" />
-      <PropertyRef Name="id_pelicula" />
-      <PropertyRef Name="calificacion" />
-    </Key>
-    <Property Name="id_usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="id_pelicula" Type="Int32" Nullable="false" />
-    <Property Name="calificacion" Type="Double" Nullable="false" />
-    <NavigationProperty Name="Peliculas" Relationship="Self.FK_rate_per_user_peliculas" FromRole="rate_per_user" ToRole="Peliculas" />
-    <NavigationProperty Name="usuarios" Relationship="Self.FK_rate_per_user_usuarios" FromRole="rate_per_user" ToRole="usuarios" />
   </EntityType>
   <Association Name="FK__Peliculas__id_di__45F365D3">
     <End Role="Directores" Type="Self.Directores" Multiplicity="1" />
@@ -109,6 +118,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_rate_peliculas">
+    <End Role="Peliculas" Type="Self.Peliculas" Multiplicity="0..1" />
+    <End Role="rates" Type="Self.rates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Peliculas">
+        <PropertyRef Name="id_pelicula" />
+      </Principal>
+      <Dependent Role="rates">
+        <PropertyRef Name="id_pelicula" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_rate_per_user_peliculas">
     <End Role="Peliculas" Type="Self.Peliculas" Multiplicity="1" />
     <End Role="rate_per_user" Type="Self.rate_per_user" Multiplicity="*" />
@@ -137,10 +158,11 @@
     <EntitySet Name="Directores" EntityType="Self.Directores" />
     <EntitySet Name="Generos" EntityType="Self.Generos" />
     <EntitySet Name="Peliculas" EntityType="Self.Peliculas" />
+    <EntitySet Name="rate_per_user" EntityType="Self.rate_per_user" />
+    <EntitySet Name="rates" EntityType="Self.rates" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="usuarios" EntityType="Self.usuarios" />
     <EntitySet Name="Puntuaciones" EntityType="Self.Puntuaciones" />
-    <EntitySet Name="rate_per_user" EntityType="Self.rate_per_user" />
     <AssociationSet Name="FK__Peliculas__id_di__45F365D3" Association="Self.FK__Peliculas__id_di__45F365D3">
       <End Role="Directores" EntitySet="Directores" />
       <End Role="Peliculas" EntitySet="Peliculas" />
@@ -153,6 +175,10 @@
       <End Role="Peliculas" EntitySet="Peliculas" />
       <End Role="Puntuaciones" EntitySet="Puntuaciones" />
     </AssociationSet>
+    <AssociationSet Name="FK_rate_peliculas" Association="Self.FK_rate_peliculas">
+      <End Role="Peliculas" EntitySet="Peliculas" />
+      <End Role="rates" EntitySet="rates" />
+    </AssociationSet>
     <AssociationSet Name="FK_rate_per_user_peliculas" Association="Self.FK_rate_per_user_peliculas">
       <End Role="Peliculas" EntitySet="Peliculas" />
       <End Role="rate_per_user" EntitySet="rate_per_user" />
@@ -161,32 +187,5 @@
       <End Role="usuarios" EntitySet="usuarios" />
       <End Role="rate_per_user" EntitySet="rate_per_user" />
     </AssociationSet>
-    <EntitySet Name="rates" EntityType="das_peliculasModel.rates" />
-    <AssociationSet Name="FK_rate_peliculas" Association="das_peliculasModel.FK_rate_peliculas">
-      <End Role="Peliculas" EntitySet="Peliculas" />
-      <End Role="rates" EntitySet="rates" />
-    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="rates">
-    <Key>
-      <PropertyRef Name="id_calificacion" />
-    </Key>
-    <Property Name="id_pelicula" Type="Int32" />
-    <Property Name="titulo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="promedio_calificacion" Type="Double" />
-    <Property Name="id_calificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <NavigationProperty Name="Peliculas" Relationship="das_peliculasModel.FK_rate_peliculas" FromRole="rates" ToRole="Peliculas" />
-  </EntityType>
-  <Association Name="FK_rate_peliculas">
-    <End Type="das_peliculasModel.Peliculas" Role="Peliculas" Multiplicity="0..1" />
-    <End Type="das_peliculasModel.rates" Role="rates" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Peliculas">
-        <PropertyRef Name="id_pelicula" />
-      </Principal>
-      <Dependent Role="rates">
-        <PropertyRef Name="id_pelicula" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

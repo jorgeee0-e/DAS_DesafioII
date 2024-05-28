@@ -26,7 +26,7 @@ namespace Desafio2_DAS.Controllers
 
 
         // GET: Peliculas/Details/5
-        public ActionResult Details(string nombre)
+        public ActionResult DetailsUnique(string nombre)
         {
             if (nombre is null)
             {
@@ -38,15 +38,33 @@ namespace Desafio2_DAS.Controllers
                 var peliculas = context.Peliculas
                     .Include("Generos")
                     .Include("Directores")
+                    .Include("Puntuaciones")
                     .Where(x=> x.titulo.Contains(nombre)).ToList();
                 return View("Details",peliculas);
             }
         }
 
+        public ActionResult Details(string nombre)
+        {
+            if (nombre is null)
+            {
+                throw new ArgumentNullException(nameof(nombre));
+            }
+
+            using (DbModel_Movies2 context = new DbModel_Movies2())
+            {
+                var peliculas = context.Peliculas
+                    .Include("Generos")
+                    .Include("Puntuaciones")
+                    .Include("Directores")
+                    .Where(x => x.titulo.Contains(nombre)).ToList();
+                return View("Index", peliculas);
+            }
+        }
 
 
-         // GET: Peliculas/Details/Genero
-         public ActionResult FiltrarPorGenero(String genero)
+        // GET: Peliculas/Details/Genero
+        public ActionResult FiltrarPorGenero(String genero)
         {
             using (DbModel_Movies2 context = new DbModel_Movies2())
             {

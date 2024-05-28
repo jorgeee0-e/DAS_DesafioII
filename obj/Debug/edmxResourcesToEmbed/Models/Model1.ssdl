@@ -34,17 +34,14 @@ advertencia 6002: La tabla o vista 'das_peliculas.dbo.Puntuaciones' no tiene def
     <Property Name="id_pelicula" Type="int" Nullable="false" />
     <Property Name="puntuacion" Type="decimal" Precision="3" Scale="1" />
   </EntityType>
-  <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'das_peliculas.dbo.rate_per_user' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
   <EntityType Name="rate_per_user">
     <Key>
-      <PropertyRef Name="id_usuario" />
-      <PropertyRef Name="id_pelicula" />
-      <PropertyRef Name="calificacion" />
+      <PropertyRef Name="Id" />
     </Key>
     <Property Name="id_usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="id_pelicula" Type="int" Nullable="false" />
     <Property Name="calificacion" Type="float" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="rates">
     <Key>
@@ -151,6 +148,7 @@ advertencia 6002: La tabla o vista 'das_peliculas.dbo.rate_per_user' no tiene de
     <EntitySet Name="Directores" EntityType="Self.Directores" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Generos" EntityType="Self.Generos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Peliculas" EntityType="Self.Peliculas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="rate_per_user" EntityType="Self.rate_per_user" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="rates" EntityType="Self.rates" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
@@ -159,13 +157,6 @@ advertencia 6002: La tabla o vista 'das_peliculas.dbo.rate_per_user' no tiene de
 [Puntuaciones].[id_pelicula] AS [id_pelicula], 
 [Puntuaciones].[puntuacion] AS [puntuacion]
 FROM [dbo].[Puntuaciones] AS [Puntuaciones]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="rate_per_user" EntityType="Self.rate_per_user" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-[rate_per_user].[id_usuario] AS [id_usuario], 
-[rate_per_user].[id_pelicula] AS [id_pelicula], 
-[rate_per_user].[calificacion] AS [calificacion]
-FROM [dbo].[rate_per_user] AS [rate_per_user]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK__Peliculas__id_di__45F365D3" Association="Self.FK__Peliculas__id_di__45F365D3">
       <End Role="Directores" EntitySet="Directores" />

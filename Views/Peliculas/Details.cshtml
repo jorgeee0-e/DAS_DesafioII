@@ -8,31 +8,69 @@
 }
 
 <div class="row">
-    <div class="row">
 
-        @foreach (var p in Model)
-        {
+    @foreach (var p in Model)
+    {
 
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <script>console.log(@p.poster_url)</script>
-                    <img class="card-img-top" src="@p.poster_url" alt="@p.titulo" />
-                    <script>console.log(@p.poster_url)</script>
-                    <div class="card-body">
-                        <h5 class="card-title">@p.titulo</h5>
-                        <p class="card-text">@p.sinopsis</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="@Url.Action("Details","Peliculas",new{nombre = p.titulo})" class="btn btn-sm btn-outline-secondary">View</a>
-                            </div>
-                            <small class="text-muted"> <b>Director:</b> @p.Directores.nombre</small>
-                            <small class="text-muted"> <b>Genero:</b> @p.Generos.genero</small>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <script>console.log(@p.poster_url)</script>
+                <img class="card-img-top" src="@p.poster_url" alt="@p.titulo" />
+                <script>console.log(@p.poster_url)</script>
+                <div class="card-body">
+                    <h5 id="titulo" class="card-title">@p.titulo </h5>
+                    <small class="text-muted"><b>Rating:</b> @p.Puntuaciones.puntuacion</small>
+                    <p class="card-text">@p.sinopsis</p>
+                    <div class="d-flex justify-content-between align-items-center ">
+                        <div class="btn-group">
+                            <a href="@Url.Action("DetailsUnique","Peliculas",new{nombre = p.titulo})" class="btn btn-sm btn-outline-secondary">View</a>
                         </div>
+                        <small class="text-muted"> <b>Director:</b> @p.Directores.nombre</small>
+                        <small class="text-muted"> <b>Genero:</b> @p.Generos.genero</small>
                     </div>
+
+
                 </div>
             </div>
+        </div>
+        <div class="container col-md-4">
+            <div class="container mt-5">
+                <form action="@Url.Action("Create","RatesPerUser")" method="post">
+                    <input type="hidden" name="titulo" id="titulohidden" value="@p.titulo" />
+                    <div class="form-group">
+                        <label for="campo1">Registre su usuario</label>
+                        <input type="text" class="form-control" id="campo1" name="usuario" placeholder="Usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">Ingrese su score</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button id="decrementar" type="button" class="btn btn-outline-secondary" onclick="decrement()">-</button>
+                            </div>
+                            <input type="number" class="form-control" id="valor" value="0" min="0" max="10" name="score" readonly>
+                            <div class="input-group-append">
+                                <button id="incrementar" type="button" class="btn btn-outline-secondary" onclick="increment()" >+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    }
+
+
+    <script>
+        function increment() {
+            var valor = document.getElementById('valor');
+            valor.stepUp();
         }
-    </div>
+
+        function decrement() {
+            var valor = document.getElementById('valor');
+            valor.stepDown();
+        }
+    </script>
 </div>
 
 

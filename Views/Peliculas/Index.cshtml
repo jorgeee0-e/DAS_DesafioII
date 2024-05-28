@@ -21,7 +21,7 @@
                         <p class="card-text">@p.sinopsis</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a href="@Url.Action("Details","Peliculas",new{nombre = p.titulo})" class="btn btn-sm btn-outline-secondary">View</a>
+                                <a href="@Url.Action("DetailsUnique","Peliculas",new{nombre = p.titulo})" class="btn btn-sm btn-outline-secondary">View</a>
                             </div>
                             <small class="text-muted"> <b>Director:</b> @p.Directores.nombre</small>
                             <small class="text-muted"> <b>Genero:</b> @p.Generos.genero</small>

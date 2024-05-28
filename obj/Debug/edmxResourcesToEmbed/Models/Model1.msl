@@ -29,6 +29,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="rate_per_user">
+      <EntityTypeMapping TypeName="das_peliculasModel.rate_per_user">
+        <MappingFragment StoreEntitySet="rate_per_user">
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="id_pelicula" ColumnName="id_pelicula" />
+          <ScalarProperty Name="calificacion" ColumnName="calificacion" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="rates">
+      <EntityTypeMapping TypeName="das_peliculasModel.rates">
+        <MappingFragment StoreEntitySet="rates">
+          <ScalarProperty Name="id_pelicula" ColumnName="id_pelicula" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+          <ScalarProperty Name="promedio_calificacion" ColumnName="promedio_calificacion" />
+          <ScalarProperty Name="id_calificacion" ColumnName="id_calificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="sysdiagrams">
       <EntityTypeMapping TypeName="das_peliculasModel.sysdiagrams">
         <MappingFragment StoreEntitySet="sysdiagrams">
@@ -56,25 +76,6 @@
         <MappingFragment StoreEntitySet="Puntuaciones">
           <ScalarProperty Name="id_pelicula" ColumnName="id_pelicula" />
           <ScalarProperty Name="puntuacion" ColumnName="puntuacion" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="rate_per_user">
-      <EntityTypeMapping TypeName="das_peliculasModel.rate_per_user">
-        <MappingFragment StoreEntitySet="rate_per_user">
-          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
-          <ScalarProperty Name="id_pelicula" ColumnName="id_pelicula" />
-          <ScalarProperty Name="calificacion" ColumnName="calificacion" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="rates">
-      <EntityTypeMapping TypeName="das_peliculasModel.rates">
-        <MappingFragment StoreEntitySet="rates">
-          <ScalarProperty Name="id_calificacion" ColumnName="id_calificacion" />
-          <ScalarProperty Name="promedio_calificacion" ColumnName="promedio_calificacion" />
-          <ScalarProperty Name="titulo" ColumnName="titulo" />
-          <ScalarProperty Name="id_pelicula" ColumnName="id_pelicula" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
